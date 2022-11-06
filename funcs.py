@@ -35,3 +35,24 @@ class Funcs:
             "Purchase": tuple[6]
             }
         return dict
+
+    def convertTo_JSON_Amounts(self, records):
+        maxRecord = records[0]
+        minRecord = records[1]
+        dict = {
+                "MAX":{
+                    "Id": maxRecord[0],
+                    "Product": maxRecord[1],
+                    "Category": maxRecord[2],
+                    "Amount": str(maxRecord[3]),
+                    "Total": str(maxRecord[4])
+                },
+                "MIN":{
+                    "Id": minRecord[0],
+                    "Product": minRecord[1],
+                    "Category": minRecord[2],
+                    "Amount": str(minRecord[3]),
+                    "Total": str(minRecord[4])
+                }
+            }
+        return dict

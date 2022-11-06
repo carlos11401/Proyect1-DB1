@@ -13,6 +13,11 @@ def customerWithMorePurchases():
     customer = db.get_customerWithMorePurchases()
     return jsonify(customer)
 
+@app.route('/2consult', methods=['POST'])
+def max_min_amounts():
+    products = db.get_moreAndLessPurchasedProducts()
+    return jsonify(products)
+
 if __name__ == '__main__':
     app.run()
     
