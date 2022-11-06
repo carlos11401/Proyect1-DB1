@@ -18,6 +18,11 @@ def max_min_amounts():
     products = db.get_moreAndLessPurchasedProducts()
     return jsonify(products)
 
+@app.route('/3consult', methods=['POST'])
+def sellerWithMoreSales():
+    seller = db.get_sellerWithMoreSales()
+    return jsonify(seller)
+
 if __name__ == '__main__':
     app.run()
     

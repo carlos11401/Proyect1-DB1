@@ -31,7 +31,7 @@ class DataBase:
             records = self.cursor.fetchall()
 
             print(" - Done.")
-            return self.funcs.convertTo_JSONCustomer(records)
+            return self.funcs.convertTo_JSON_1consult(records)
 
         except Exception as e:
             print("Error:", e)
@@ -65,7 +65,28 @@ class DataBase:
             records = self.cursor.fetchall()
             maxAndMinAmounts = records[:1] + records[len(records)-1:]
             print(" - Done.")
-            return self.funcs.convertTo_JSON_Amounts(maxAndMinAmounts)
+            return self.funcs.convertTo_JSON_2consult(maxAndMinAmounts)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1
+    
+    def get_sellerWithMoreSales(self):
+        print(" - Executing consult...")
+
+        query = "SELECT idSeller_order, name_seller, SUM(price_product*amount_order) AS Sales FROM db_proyect1.order AS orderT\n"
+        query += "INNER JOIN product ON product.id_product = orderT.idProduct_order\n"
+        query += "INNER JOIN seller ON id_seller = orderT.idSeller_order\n"
+        query += "GROUP BY idSeller_order\n"
+        query += "ORDER BY Sales DESC\n"
+        query += "LIMIT 1;"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_3consult(records)
 
         except Exception as e:
             print("Error:", e)

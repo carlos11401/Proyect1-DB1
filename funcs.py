@@ -26,7 +26,7 @@ class Funcs:
 
         return id_biggesCustomer, higherTotalPrice
 
-    def convertTo_JSONCustomer(self, tuple):
+    def convertTo_JSON_1consult(self, tuple):
         customer = tuple[0]
         dict = {
             "Id": customer[0],
@@ -37,7 +37,7 @@ class Funcs:
             }
         return dict
 
-    def convertTo_JSON_Amounts(self, records):
+    def convertTo_JSON_2consult(self, records):
         maxRecord = records[0]
         minRecord = records[1]
         dict = {
@@ -55,5 +55,14 @@ class Funcs:
                     "Amount": str(minRecord[3]),
                     "Total": str(minRecord[4])
                 }
+            }
+        return dict
+
+    def convertTo_JSON_3consult(self, tuple):
+        seller = tuple[0]
+        dict = {
+            "Id": seller[0],
+            "Name": seller[1],
+            "Sales": str(seller[2])
             }
         return dict
