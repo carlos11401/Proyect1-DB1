@@ -27,12 +27,13 @@ class Funcs:
         return id_biggesCustomer, higherTotalPrice
 
     def convertTo_JSONCustomer(self, tuple):
+        customer = tuple[0]
         dict = {
-            "Id": tuple[0],
-            "Name": tuple[1],
-            "Last Name": tuple[2],
-            "Country": tuple[3],
-            "Purchase": tuple[6]
+            "Id": customer[0],
+            "Name": customer[1],
+            "Last Name": customer[2],
+            "Country": customer[3],
+            "Purchase": str(customer[4])
             }
         return dict
 

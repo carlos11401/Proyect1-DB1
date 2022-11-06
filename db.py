@@ -18,19 +18,20 @@ class DataBase:
     def get_customerWithMorePurchases(self):
         print(" - Executing consult...")
 
-        query = "SELECT id_cliente, Nombre, Apellido, name_country, amount_order, price_product  FROM db_proyect1.client\n"
+        query = "SELECT id_cliente, Nombre, Apellido, name_country, SUM(price_product) AS Total FROM db_proyect1.client\n"
         query += "INNER JOIN db_proyect1.order ON db_proyect1.order.idClient_order = db_proyect1.client.id_cliente\n"
         query += "INNER JOIN db_proyect1.product ON db_proyect1.product.id_product = db_proyect1.order.idProduct_order\n"
         query += "INNER JOIN db_proyect1.country ON db_proyect1.client.id_pais = db_proyect1.country.id_country\n"
-        query += "ORDER BY id_cliente;"
+        query += "GROUP BY id_cliente\n"
+        query += "ORDER BY Total DESC\n"
+        query += "LIMIT 1;"
 
         try:
             self.cursor.execute(query)
             records = self.cursor.fetchall()
-            idCustomer, totalPurchase = self.funcs.calculate_customerWithMorePuchases(records)
-            customerWithMorePurchases = records[idCustomer] + (totalPurchase,)
+
             print(" - Done.")
-            return self.funcs.convertTo_JSONCustomer(customerWithMorePurchases)
+            return self.funcs.convertTo_JSONCustomer(records)
 
         except Exception as e:
             print("Error:", e)
