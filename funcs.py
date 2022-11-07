@@ -66,3 +66,11 @@ class Funcs:
             "Sales": str(seller[2])
             }
         return dict
+
+    def convertTo_JSON_4consult(self, tuple):
+        seller = tuple[0]
+        dict = {
+            "Country": seller[0],
+            "Sales": str(seller[1])
+            }
+        return dict
