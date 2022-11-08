@@ -127,3 +127,10 @@ class Funcs:
             counter += 1
 
         return dict
+
+    def convertTo_JSON_8consult(self, tuple):
+        dict = {}
+        for country in tuple:
+            dict[country[0]] = str(country[1])  
+
+        return dict

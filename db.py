@@ -212,3 +212,28 @@ class DataBase:
         except Exception as e:
             print("Error:", e)
             return -1
+
+    def get_englandPurchasesByMonth(self):
+        print(" - Executing consult...")
+
+        query = "SELECT DateOrder, Total\n"
+        query += "FROM(\n"
+        query += "SELECT name_country AS CountryName, MONTH(date_order) AS DateOrder, SUM(amount_order * price_product) AS Total\n" 
+        query += "FROM db_proyect1.order\n"
+        query += "INNER JOIN seller ON id_seller = idSeller_order\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN country ON id_country = id_country_seller\n"
+        query += "GROUP BY id_country_seller, DateOrder\n"
+        query += "ORDER BY DateOrder ASC\n"
+        query += ") AS Res WHERE CountryName = \"Australia\";"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_8consult(records)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1
