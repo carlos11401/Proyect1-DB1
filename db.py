@@ -150,3 +150,37 @@ class DataBase:
         except Exception as e:
             print("Error:", e)
             return -1
+
+    def get_categoryMoreAndLessAmounts(self):
+        print(" - Executing consult...")
+
+        query = "SELECT nameC, Total FROM(\n"
+        query += "SELECT cat_name AS nameC, SUM(amount_order) AS Total\n"
+        query += "FROM db_proyect1.order AS orderT\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN category ON category.id = id_category_product\n"
+        query += "GROUP BY id_category_product\n"
+        query += "ORDER BY Total DESC\n"
+        query += "LIMIT 1\n"
+        query += ") AS Max\n"
+        query += "UNION ALL\n"
+        query += "SELECT nameC, Total FROM(\n"
+        query += "SELECT cat_name AS nameC, SUM(amount_order) AS Total \n"
+        query += "FROM db_proyect1.order AS orderT\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN category ON category.id = id_category_product\n"
+        query += "GROUP BY id_category_product\n"
+        query += "ORDER BY Total ASC\n"
+        query += "LIMIT 1\n" 
+        query += ") AS Min;\n"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_6consult(records)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1

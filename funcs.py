@@ -93,3 +93,18 @@ class Funcs:
             counter += 1
 
         return dict
+
+    def convertTo_JSON_6consult(self, tuple):
+        maxRecord = tuple[0]
+        minRecord = tuple[1]
+        dict = {
+                "MAX":{
+                    "Category": maxRecord[0],
+                    "Amount": str(maxRecord[1]),
+                },
+                "MIN":{
+                    "Category": minRecord[0],
+                    "Amount": str(minRecord[1]),
+                }
+            }
+        return dict

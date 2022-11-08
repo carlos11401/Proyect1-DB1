@@ -33,5 +33,10 @@ def topContriesWithMorePurchases():
     seller = db.get_topContriesWithMorePurchases()
     return jsonify(seller)
 
+@app.route('/6consult', methods=['POST'])
+def categoryMoreAndLessAmounts():
+    seller = db.get_categoryMoreAndLessAmounts()
+    return jsonify(seller)
+
 if __name__ == '__main__':
     app.run()
