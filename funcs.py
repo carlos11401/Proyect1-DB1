@@ -74,3 +74,22 @@ class Funcs:
             "Sales": str(seller[1])
             }
         return dict
+
+    def convertTo_JSON_5consult(self, tuple):
+        dict = {}
+        counter = 0
+        for country in tuple:
+            strg = str(counter+1)
+            aux = {
+                    strg: {
+                        "Id": country[0],
+                        "Country": country[1],
+                        "Purchase": str(country[2])
+                    }
+                }
+            
+
+            dict.update(aux)
+            counter += 1
+
+        return dict

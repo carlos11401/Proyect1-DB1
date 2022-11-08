@@ -28,6 +28,10 @@ def contryWithMoreAndLessSales():
     seller = db.get_contryWithMoreAndLessSales()
     return jsonify(seller)
 
+@app.route('/5consult', methods=['POST'])
+def topContriesWithMorePurchases():
+    seller = db.get_topContriesWithMorePurchases()
+    return jsonify(seller)
+
 if __name__ == '__main__':
     app.run()
-    

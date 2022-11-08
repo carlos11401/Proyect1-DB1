@@ -127,3 +127,26 @@ class DataBase:
         except Exception as e:
             print("Error:", e)
             return -1
+
+    def get_topContriesWithMorePurchases(self):
+        print(" - Executing consult...")
+
+        query = "SELECT id_country ,name_country AS nameC, SUM(amount_order * price_product) AS Total\n" 
+        query += "FROM db_proyect1.order AS orderT\n"
+        query += "INNER JOIN seller ON id_seller = orderT.idSeller_order\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN country ON id_country = id_country_seller\n"
+        query += "GROUP BY name_country\n"
+        query += "ORDER BY Total ASC\n"
+        query += "LIMIT 5;"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_5consult(records)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1
