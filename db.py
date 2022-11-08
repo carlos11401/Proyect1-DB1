@@ -237,3 +237,39 @@ class DataBase:
         except Exception as e:
             print("Error:", e)
             return -1
+
+    def get_monthWithMoreAndLessSales(self):
+        print(" - Executing consult...")
+
+        query = "SELECT DateOrder, Total FROM(\n"
+        query += "SELECT MONTH(date_order) AS DateOrder, SUM(amount_order * price_product) AS Total\n" 
+        query += "FROM db_proyect1.order\n"
+        query += "INNER JOIN seller ON id_seller = idSeller_order\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN country ON id_country = id_country_seller\n"
+        query += "GROUP BY DateOrder\n"
+        query += "ORDER BY Total DESC\n"
+        query += "LIMIT 1\n"
+        query += ") AS Max\n"
+        query += "UNION ALL\n"
+        query += "SELECT DateOrder, Total FROM(\n"
+        query += "SELECT MONTH(date_order) AS DateOrder, SUM(amount_order * price_product) AS Total\n"
+        query += "FROM db_proyect1.order\n"
+        query += "INNER JOIN seller ON id_seller = idSeller_order\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN country ON id_country = id_country_seller\n"
+        query += "GROUP BY DateOrder\n"
+        query += "ORDER BY Total ASC\n"
+        query += "LIMIT 1\n"
+        query += ") AS Min;\n"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_9consult(records)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1

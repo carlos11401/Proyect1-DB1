@@ -48,5 +48,10 @@ def englandPurchasesByMonth():
     seller = db.get_englandPurchasesByMonth()
     return jsonify(seller)
 
+@app.route('/9consult', methods=['POST'])
+def monthWithMoreAndLessSales():
+    seller = db.get_monthWithMoreAndLessSales()
+    return jsonify(seller)
+
 if __name__ == '__main__':
     app.run()
