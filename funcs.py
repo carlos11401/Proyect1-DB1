@@ -108,3 +108,22 @@ class Funcs:
                 }
             }
         return dict
+
+    def convertTo_JSON_7consult(self, tuple):
+        dict = {}
+        counter = 0
+        for country in tuple:
+            strg = str(counter+1)
+            aux = {
+                    strg: {
+                        "Country": country[0],
+                        "Category": country[1],
+                        "Amount": str(country[2])
+                    }
+                }
+            
+
+            dict.update(aux)
+            counter += 1
+
+        return dict

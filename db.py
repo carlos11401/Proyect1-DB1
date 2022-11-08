@@ -184,3 +184,31 @@ class DataBase:
         except Exception as e:
             print("Error:", e)
             return -1
+
+    def get_categoryMorePurchasesByCountry(self):
+        print(" - Executing consult...")
+
+        query = "SELECT CountryName, CategoryName, Maxi FROM(\n"
+        query += "SELECT CountryName, CategoryName, MAX(Amount) AS Maxi FROM(\n"
+        query += "SELECT  name_country AS CountryName, cat_name AS CategoryName, SUM(amount_order) AS Amount\n" 
+        query += "FROM client\n"
+        query += "INNER JOIN db_proyect1.order ON id_cliente = idClient_order\n"
+        query += "INNER JOIN country ON id_country = id_pais\n"
+        query += "INNER JOIN product ON id_product = idProduct_order\n"
+        query += "INNER JOIN category ON category.id = id_category_product\n"
+        query += "GROUP BY id_country ,id_category_product\n"
+        query += ") AS Sum\n"
+        query += "GROUP BY CountryName\n"
+        query += "ORDER BY CountryName\n"
+        query += ")AS Res\n"
+
+        try:
+            self.cursor.execute(query)
+            records = self.cursor.fetchall()
+
+            print(" - Done.")
+            return self.funcs.convertTo_JSON_7consult(records)
+
+        except Exception as e:
+            print("Error:", e)
+            return -1

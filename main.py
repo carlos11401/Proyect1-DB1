@@ -38,5 +38,10 @@ def categoryMoreAndLessAmounts():
     seller = db.get_categoryMoreAndLessAmounts()
     return jsonify(seller)
 
+@app.route('/7consult', methods=['POST'])
+def categoryMorePurchasesByCountry():
+    seller = db.get_categoryMorePurchasesByCountry()
+    return jsonify(seller)
+
 if __name__ == '__main__':
     app.run()
